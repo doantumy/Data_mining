@@ -244,7 +244,7 @@ m %>% addTiles() %>%  addCircleMarkers(~ longitude, ~ latitude, radius = 1,
                    color = "green", fillOpacity = 0.7)
 
 ```
-![alt text]p1.png
+![](./_mac/p1.png)
 
 ### Total number of requests by issues category
 
