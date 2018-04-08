@@ -263,6 +263,7 @@ coord_flip()
 
 ```
 
+![](./_mac/p2.png)
 
 ### Day of the week of occured requests
 
@@ -279,6 +280,7 @@ labs(x = "Day of the week", y = "Total number of calls") +
 theme(legend.position = "right")
 ggplotly(p)
 ```
+![](./_mac/p3.png)
 
 ### Month of the year of occured calls
 
@@ -293,6 +295,7 @@ group_by(month, weekday) %>%
 count() %>%
 plot_ly(x = ~month, y = ~n, color = ~weekday)
 ```
+![](./_mac/p4.png)
 
 ### Hour of the day of occured requests
 
@@ -312,6 +315,7 @@ labs(x = "Hour of the day", y = "Number of calls")
 ggplotly(p)
 ```
 
+![](./_mac/p5.png)
 
 ### Popular neighborhood districts with calls
 
@@ -329,6 +333,7 @@ random.color=T, colors=c('black', 'red','dark green','dark orange', 'blue'))
 
 ```
 
+![](./_mac/p6.png)
 
 ### Number of open and closed ticket
 
@@ -344,7 +349,7 @@ labs(y = "Total number of requests", x = "Status of request")
 ggplotly(p)
 
 ```
-
+![](./_mac/p7.png)
 
 ### Working with external dataset
 
@@ -402,6 +407,8 @@ ggplotly(p1)
 
 ```
 
+![](./_mac/p8.png)
+
 Here the trend is clearer for the statistics of Average Precipitation, the highest values are in the month of August till early September.
 
 ```{r echo=FALSE,  warning=FALSE, message=FALSE}
@@ -414,6 +421,7 @@ p2 <- calls_16 %>%
 ggplotly(p2)
 
 ```
+![](./_mac/p9.png)
 
 For snowfall, because of the geographic location of New Orleans, it's less likely to have snow in this city and the number is true here. It snowed more in February and December. However, it comes with a very low number at around 0.0049. This shows that the depth of snow will be insignificant compared to other cities in the US such as NYC or Cleveland
 
@@ -427,6 +435,7 @@ labs(x = "", y = "Average Snowfall")
 ggplotly(p3)
 
 ```
+![](./_mac/p10.png)
 
 Finally, our new dataset will be splitted into 70:30 ratio for train and test set.
 
