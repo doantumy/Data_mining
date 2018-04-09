@@ -44,7 +44,7 @@ library('readr')
 library('lubridate')
 library('tibble')
 library('data.table')
-# Machcine learning library
+# Macchine learning library
 library('randomForest')
 library('e1071')
 library("caret")
@@ -453,14 +453,14 @@ test <- data[indexes,]
 
 ```
 
-### 5. Modeling
+## 5. Modeling
 
 Our goal is to build a model for predicting the total volumne of daily call requests for specific issue type received through the 311 phone line. In order to do this we have to prepare data for both training and testing purposes. A new dataset is created from the original dataset which contains required columns for our model are: trans_type, trans_category, weekday, month, year, holiday, average_temp, precipitation, snowfall, n (this is our response).
 
 Models will be build using several algorithms such as Random Forest, GBM and SVM.
 
 
-#### Random Forest Model
+### Random Forest Model
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 model.rf <- randomForest(n ~ ., data = train, class = "rf")
@@ -484,7 +484,7 @@ rmse(predict(model.rf1, test), test$n) # 6.718642
 After printing out the importance of the variables, we can see that only transaction type and category contribute most to the importance. Temperature also has importance as our predictioc before but not much, the same is true for month and weekday. The least importance factor is snowfall.
 
 
-#### Gradient Boosting Machine (GBM)
+### Gradient Boosting Machine (GBM)
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # GBM model with random parameters
@@ -496,7 +496,7 @@ print(model.gbm)
 rmse(prdt, test$n) # 6.326377
 ```
 
-#### Support Vector Machine (SVM)
+### Support Vector Machine (SVM)
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # SVM model with default parameters
@@ -519,9 +519,9 @@ rmse(predict(model.svm2, test), test$n) # 6.587086
 ```
 
 
-### 6. Evaluation
+## 6. Evaluation
 
-#### Model Selection
+### Model Selection
 
 In this section we use RMSE to select the model with lowest score. Here, we can see that Random Forest has the lowest number out of three models. 
 
@@ -532,7 +532,7 @@ In this section we use RMSE to select the model with lowest score. Here, we can 
 |RF  |6.32604	 |6.71864  |
 
 
-### 7. Deployment and Conclusion
+## 7. Deployment and Conclusion
 
 The built model obviously is not the best model that we can develop, due to the limitation of my computing power and the large number of data points we have in this dataset. Therefore, the result is just at the average and acceptable level. In the future, this can be done better by doing grid search in larger searching space for the best hyperparameters.
 
@@ -541,7 +541,7 @@ This model can be used in predicting the number of calls will be received on dai
 The dataset and the Rmarkdown file is available under below Github folder:
 https://github.com/doantumy/Data_mining
 
-### Reference
+## Reference
 
 1. Professor Muhlenbach, Fabrice (2018), Tutorials and lectures from the course.
 2. Kaggle, NYC Taxi EDA - Update: The fast & the curious, https://www.kaggle.com/headsortails/nyc-taxi-eda-update-the-fast-the-curious
