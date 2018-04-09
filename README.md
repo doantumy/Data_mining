@@ -538,7 +538,7 @@ The built model obviously is not the best model that we can develop, due to the 
 
 This model can be used in predicting the number of calls will be received on daily basis which might be helpful in arranging the phone staffs through out the day to handle those calls effectively. With this large dataset, there are many models that can be developed such as predicting the number of calls on based on the time range, predicting the number of popular issue types on some specific regions, etc.
 
-The dataset and the Rmarkdown file is available under below Github folder:
+The datasets and the Rmarkdown file are available under below Github folder:
 https://github.com/doantumy/Data_mining
 
 ## Reference
