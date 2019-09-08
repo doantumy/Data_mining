@@ -364,6 +364,33 @@ def loss_backprop(generator, criterion, out, targets, normalize):
     out.backward(gradient=out_grad)
     return total
 
+spacy_en = spacy.load('en_core_web_sm')
+
+def tokenize_en(text):
+    return [tok.text for tok in spacy_en.tokenizer(text)]
+
+train_file = 'train.json'
+valid_file = 'val.json'
+test_file = 'test.json'
+SOS_WORD = '<s>'
+EOS_WORD = '</s>'
+BLANK_WORD = '<blank>'
+SRC = Field(tokenize=tokenize_en, pad_token=BLANK_WORD)
+TGT = Field(tokenize=tokenize_en, pad_token=BLANK_WORD, init_token=SOS_WORD, eos_token=EOS_WORD)
+fields = {'src':('src',SRC),'trg':('trg',TGT)}
+train_data, val_data, test_data = data.TabularDataset.splits(
+    format='json',
+    path = 'data',
+    train=train_file,
+    validation=valid_file,
+    test=test_file,
+    fields=fields
+)
+
+MIN_FREQ = 1
+SRC.build_vocab(train_data.src, min_freq=MIN_FREQ)
+TGT.build_vocab(train_data.trg, min_freq=MIN_FREQ)
+
 # Train Epoch
 def train_epoch(train_iter, model, criterion, opt, transpose=False, SRC=SRC, TGT=TGT):
     model.train()
@@ -482,33 +509,6 @@ def rebatch(pad_idx, batch):
     src, trg = batch.src.transpose(0, 1), batch.trg.transpose(0, 1)
     src_mask, trg_mask = make_std_mask(src, trg, pad_idx)
     return Batch(src, trg, src_mask, trg_mask, (trg[1:] != pad_idx).data.sum())
-
-spacy_en = spacy.load('en_core_web_sm')
-
-def tokenize_en(text):
-    return [tok.text for tok in spacy_en.tokenizer(text)]
-
-train_file = 'train.json'
-valid_file = 'val.json'
-test_file = 'test.json'
-SOS_WORD = '<s>'
-EOS_WORD = '</s>'
-BLANK_WORD = '<blank>'
-SRC = Field(tokenize=tokenize_en, pad_token=BLANK_WORD)
-TGT = Field(tokenize=tokenize_en, pad_token=BLANK_WORD, init_token=SOS_WORD, eos_token=EOS_WORD)
-fields = {'src':('src',SRC),'trg':('trg',TGT)}
-train_data, val_data, test_data = data.TabularDataset.splits(
-    format='json',
-    path = 'data',
-    train=train_file,
-    validation=valid_file,
-    test=test_file,
-    fields=fields
-)
-
-MIN_FREQ = 1
-SRC.build_vocab(train_data.src, min_freq=MIN_FREQ)
-TGT.build_vocab(train_data.trg, min_freq=MIN_FREQ)
 
 
 # Create the model an load it onto our GPU.
