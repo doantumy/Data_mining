@@ -417,34 +417,34 @@ def greedy_decode(model, src, src_mask, max_len, start_symbol):
     return ys
   
 def test_model(model, test_iter, SRC, TGT):
-  model.eval()
-  for i, batch in enumerate(test_iter):
-      print(batch)
-      src = batch.src.transpose(0, 1)[:1]
-      print(src)
-      src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
-      out = greedy_decode(model, src, src_mask, 
+    model.eval()
+    for i, batch in enumerate(test_iter):
+        print(batch)
+        src = batch.src.transpose(0, 1)[:1]
+        print(src)
+        src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
+        out = greedy_decode(model, src, src_mask, 
                           max_len=50, start_symbol=TGT.vocab.stoi["<s>"])
-      print(out)
-      print("Translation:", end="\t")
-      for i in range(1, out.size(1)):
-          sym = TGT.vocab.itos[out[0, i]]
-          if sym == "</s>": break
-          print(sym, end =" ")
-      print('=')
+        print(out)
+        print("Translation:", end="\t")
+        for i in range(1, out.size(1)):
+            sym = TGT.vocab.itos[out[0, i]]
+            if sym == "</s>": break
+            print(sym, end =" ")
+        print('=')
 
 def translate_output(model,batch, SRC, TGT):
-  src = batch.src.transpose(0, 1)[:1]
-  src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
-  out = greedy_decode(model, src, src_mask, 
+    src = batch.src.transpose(0, 1)[:1]
+    src_mask = (src != SRC.vocab.stoi["<blank>"]).unsqueeze(-2)
+    out = greedy_decode(model, src, src_mask, 
                           max_len=50, start_symbol=TGT.vocab.stoi["<s>"])
-  print('out.size()', out.size())
-  print("Translation:", end="\t")
-  for i in range(1,out.size(1)):
-      sym = TGT.vocab.itos[out[0,i]]
-      if sym == "</s>": break
-      print(sym, end =" ")
-  print()
+    print('out.size()', out.size())
+    print("Translation:", end="\t")
+    for i in range(1,out.size(1)):
+        sym = TGT.vocab.itos[out[0,i]]
+        if sym == "</s>": break
+        print(sym, end =" ")
+    print()
 
 global max_src_in_batch, max_tgt_in_batch
 def batch_size_fn(new, count, sofar):
@@ -531,7 +531,7 @@ test_iter = data.BucketIterator(test_data, batch_size=1, train=False, sort=False
 
 criterion = LabelSmoothing(size=len(TGT.vocab), padding_idx=pad_idx, smoothing=0.1)
 criterion.cuda()
-for epoch in range(20):
+for epoch in range(50):
     print('============== Epoch ',epoch,' ==============')
     train_epoch((rebatch(pad_idx, b) for b in train_iter), model, criterion, model_opt, writer)
     print("====== Start Validation ======")
